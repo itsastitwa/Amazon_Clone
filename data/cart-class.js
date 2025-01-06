@@ -2,17 +2,17 @@ class Cart{
 	//export let cart = undefined; //this is equal to export let cart;
 	//cartItems = undefined; === cartItems;
 	cartItems;
-	localStorageKey;
+	#localStorageKey; //making localStorageKey Private(#) so that it can't be changed by anyone
 
 	constructor(localStorageKey) {
-		this.localStorageKey = localStorageKey;
-		this.loadFromStorage();
+		this.#localStorageKey = localStorageKey;
+		this.#loadFromStorage();
 	}
 
-	//loadFromStorage: function() { --> using shorthand fucntion syntax below
-	loadFromStorage() { //created this loadFromStorage extra function to use in cartTest.js in Jasmine
+	//Making loadFromStorage a private method(#), so that it can't be used outside
+	#loadFromStorage() { //created this loadFromStorage extra function to use in cartTest.js in Jasmine
 		//initially Line 1 is:- export let cart = JSON.parse(localStorage.getItem('cart'));
-		this.cartItems = JSON.parse(localStorage.getItem(this.localStorageKey)); //using this.cartItems instead of cart.cartItems--> bcz, if we change the name of the object const cart = {...} (the whole inside function will not work[as it is named as cart.carItems, previous name])
+		this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)); //using this.cartItems instead of cart.cartItems--> bcz, if we change the name of the object const cart = {...} (the whole inside function will not work[as it is named as cart.carItems, previous name])
 	
 		if (!this.cartItems) {
 			this.cartItems = [{
@@ -28,7 +28,7 @@ class Cart{
 	}
 
 	saveToStorage() {
-		localStorage.setItem(this.localStorageKey, JSON.stringify(this.cartItems));
+		localStorage.setItem(this.#localStorageKey, JSON.stringify(this.cartItems));
 	}
 
 	addToCart(productId) {
@@ -87,6 +87,9 @@ class Cart{
 const cart = new Cart('cart-oop'); //'cart-oop' is for constructor
 const businessCart = new Cart('cart-business');
 //After class created --> constructor is called
+
+//Now let's try to access private(#) localStorageKey outside the class
+//cart.#localStorageKey = 'test'; //We go SyntaxError
 
 console.log(cart);
 console.log(businessCart); 
