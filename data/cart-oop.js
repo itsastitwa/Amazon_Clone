@@ -6,7 +6,7 @@ function Cart(localStorageKey) {
 		//loadFromStorage: function() { --> using shorthand fucntion syntax below
 		loadFromStorage() { //created this loadFromStorage extra function to use in cartTest.js in Jasmine
 			//initially Line 1 is:- export let cart = JSON.parse(localStorage.getItem('cart'));
-			this.cartItems = JSON.parse(localStorage.getItem('localStorageKey')); //using this.cartItems instead of cart.cartItems--> bcz, if we change the name of the object const cart = {...} (the whole inside function will not work[as it is named as cart.carItems, previous name])
+			this.cartItems = JSON.parse(localStorage.getItem(localStorageKey)); //using this.cartItems instead of cart.cartItems--> bcz, if we change the name of the object const cart = {...} (the whole inside function will not work[as it is named as cart.carItems, previous name])
 		
 			if (!this.cartItems) {
 				this.cartItems = [{
@@ -22,7 +22,7 @@ function Cart(localStorageKey) {
 		},
 		
 		saveToStorage() {
-			localStorage.setItem('localStorageKey', JSON.stringify(this.cartItems));
+			localStorage.setItem(localStorageKey, JSON.stringify(this.cartItems));
 		},
 	
 		addToCart(productId) {
