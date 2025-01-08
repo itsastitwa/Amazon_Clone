@@ -1,3 +1,5 @@
+import {formatCurrency} from '../scripts/utils/money.js';
+
 export function getProduct(productId){
   let matchingProduct;
 
@@ -10,6 +12,29 @@ export function getProduct(productId){
     return matchingProduct;
 }
 
+class Product {
+  id;
+  image;
+  name;
+  rating;
+  priceCents;
+
+  constructor(productDetails) {
+    this.id = productDetails.id;
+    this.image = productDetails.image;
+    this.name = productDetails.name;
+    this.rating = productDetails.rating;
+    this.priceCents = productDetails.priceCents;
+  }
+
+  getStarsUrl() {
+    return `images/ratings/rating-${this.rating.stars * 10}.png`;
+  }
+
+  getPrice(){
+    return `$${formatCurrency(this.priceCents)}`;
+  }
+}
 
 export const products = [
   {
@@ -670,4 +695,26 @@ export const products = [
       "mens"
     ]
   }
-];
+].map((productDetails) => {
+  //here we transforming each of the prdoucts(productDetails) into the CLASS
+  return new Product(productDetails);
+});
+
+
+
+
+
+
+
+
+//.map() --> we take each value in an array -> we run this function on it -> and we transform it and then put it inside a new array
+//.map() creates a new array from calling a function for every array element. map() does not execute the function for empty elements. map() does not change the original array.
+
+/*
+[                                  [
+  product1,  ------> function -----> new Product(product1),
+  product2,  ------> function -----> new Product(product2),
+  product3,  ------> function -----> new Product(product3),
+....                                ....
+]                                  ]
+*/
