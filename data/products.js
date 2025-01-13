@@ -34,6 +34,30 @@ class Product {
   getPrice(){
     return `$${formatCurrency(this.priceCents)}`;
   }
+
+  extraInfoHTML() {
+    return ''; //For regular products--> It will gives nothing(so no error), when we gonna use this in Clothing() Line 53
+  }
+}
+
+// INHERITANCE
+class Clothing extends Product {
+  sizeChartLink;
+
+  constructor(productDetails){
+    //One problem is :- Clothing inherits all the properties from the product(So we also need to set the id, image, name,...)
+    super(productDetails); //super() will basically call the constructor of parent class(instead of defining them one-by-one, use super())
+    this.sizeChartLink = productDetails.sizeChartLink;
+  }
+
+  extraInfoHTML() {
+    //super().extraInfoHTML(); // If you wanna access parent's methods 
+    return `
+      <a href="${this.sizeChartLink}" target="_blank">
+        Size chart
+      </a>
+    `;
+  }
 }
 
 export const products = [
@@ -697,6 +721,11 @@ export const products = [
   }
 ].map((productDetails) => {
   //here we transforming each of the prdoucts(productDetails) into the CLASS
+
+  if(productDetails.type === 'clothing'){
+    return new Clothing(productDetails);
+  }
+  
   return new Product(productDetails);
 });
 
