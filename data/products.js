@@ -60,6 +60,7 @@ class Clothing extends Product {
   }
 }
 
+
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -746,4 +747,43 @@ export const products = [
   product3,  ------> function -----> new Product(product3),
 ....                                ....
 ]                                  ]
+*/
+
+
+
+/*
+>> built-in class
+const date = new Date();
+console.log(date);
+console.log(date.toLocaleTimeString());
+*/
+
+/*
+>> More about "this"
+console.log(this); //undefined(makes sense, as this is not pointing to any class properties)
+
+const object2 = {
+  a: 2,
+  b: this.a //gives us undefined (as an uncaught error), as obj2 is not created before using 'this'
+};
+*/
+
+/*
+function logThis(){
+  console.log(this);
+}
+logThis(); //again undefined--> as we are not inside of any object, so there's nothing for "this" to point to
+logThis.call('hello'); //Now inside a function we can assign value for "this"--> by using .call(assign value for this). Eg:- 'hello', 1,..etc.
+
+//Note:- Arrow function do not change the value of "this"
+const object3 = {
+  method : () => {
+    console.log(this);
+  }
+};
+object3.method(); //Now the thing is, the value of "this" in the given object will we the same as it was before the object(), which is undefined. If the value of "this" before is 3.14, it will be the same even after arrow function(as it doesn't change any thing)
+
+SUMMARY:- >>Inside the method, this defined to outter object
+          >>Inside the function, this points to undefined. But we can change it to whatever we want by using .call()
+          >>Arrow function do not change the value of this'''.
 */
