@@ -1,10 +1,20 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { loadFromStorage, cart } from "../../data/cart.js";
+//Our tests are failing--> bcz, now we are loading products from the backend. So we have to loadProducts here too for renderOrderSummary() in beforeEach
+import { loadProducts } from "../../data/products.js";
 
 //2 things to test
 describe('test suite: renderOrderSummary', () => {
 	const productId1 = 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6';
 	const productId2 = '15b6fc6f-327a-4ec4-896f-486349e85a3d'; //declared outside of all functions--> so that can use in every function
+
+	//We will loadProducts once beforeAll our tests
+	beforeAll((done) => {
+		loadProducts(() => {
+			done();
+		}); //It didn't work as backend takes time to get response... That's why our product array is still empty.
+		// As we know loadProducts() is asynchronous function--> It will not wait for response to come(and directly go on next line for execution)--> To solve that jasmine has a 'done'--> which will wait till the function is executed completeley to go for next line
+	});
 
 	//beforEach hook function ---> it will run this function before each of our test
 	beforeEach(() => {
