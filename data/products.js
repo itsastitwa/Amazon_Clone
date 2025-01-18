@@ -9,7 +9,7 @@ export function getProduct(productId){
 			}
 		});
 
-    return matchingProduct;
+  return matchingProduct;
 }
 
 class Product {
@@ -60,6 +60,31 @@ class Clothing extends Product {
   }
 }
 
+export let products = [];
+
+export function loadProducts(fun) {
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    products = JSON.parse(xhr.response).map((productDetails) => {
+      if(productDetails.type === 'clothing'){
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails);
+    });
+
+    console.log('load products');
+
+    fun();
+  });
+
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.send();
+}
+
+
+/*
+>>Instead of using this to load the products--> we are gonna use backend to load the project
 
 export const products = [
   {
@@ -729,6 +754,7 @@ export const products = [
   
   return new Product(productDetails);
 });
+*/
 
 
 
