@@ -62,6 +62,40 @@ class Clothing extends Product {
 
 export let products = [];
 
+//fetch() = better way to make HTTP requests, and instead of using callbacks, fetch uses promises()
+export function loadProductsFetch() {
+  //Make the exact same request, as we did with XMLHttpRequest. Instead of using callback () => {}, fetch uses promises .then()
+  const promise = fetch(
+    'https://supersimplebackend.dev/products'
+    ).then((response) => {
+
+    //resposne.json() is asynchronous, it returs a promise. So, we wait for this promise to finish before we go to next step.
+    //That's why we added return before promise(response.json()). So, it will wait for this 'promise' to finish before going to the next step.
+    return response.json() //This gives us the json, or the data attached to the response. In this case its our products data.
+
+    //when response.json() finishes its gonna gives us the data thats attached to the response, and its gonna save it inside this(parameter) = productsData
+  }).then((productsData) => {
+    products = productsData.map((productDetails) => {
+      if(productDetails.type === 'clothing'){
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails);
+    });
+
+    console.log('load products');
+  }); 
+
+  return promise; //By returning promise--> we can use then() again.. we can return promise; out of a function and then keep attaching more steps to that promise.
+}
+/*
+loadProductsFetch().then(() => {
+  console.log('next-step');
+});
+*/
+
+
+
+
 export function loadProducts(fun) {
   const xhr = new XMLHttpRequest();
 

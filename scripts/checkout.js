@@ -2,7 +2,7 @@ import { renderOrderSummary } from './checkout/orderSummary.js';
 
 import { renderPaymentSummary } from './checkout/paymentSummary.js';
 
-import { loadProducts } from '../data/products.js';
+import { loadProducts, loadProductsFetch } from '../data/products.js';
 
 import { loadCart } from '../data/cart.js'; //For Promsie.all() loadCart()
 //Actually in loadCart we have https://supersimplebackend.dev/cart --> which give response of 'load cart' string.
@@ -12,6 +12,22 @@ import { loadCart } from '../data/cart.js'; //For Promsie.all() loadCart()
 // import '../data/backend-practice.js';
 
 
+
+//Array of Promises
+Promise.all([
+	loadProductsFetch(),
+	new Promise((resolve) => {
+		loadCart(() => {
+			resolve();
+		});
+	})
+
+]).then(() => {
+	renderOrderSummary();
+	renderPaymentSummary();
+});
+
+/*
 //Array of Promises
 Promise.all([
 	new Promise((resolve) => {
@@ -28,7 +44,8 @@ Promise.all([
 ]).then(() => {
 	renderOrderSummary();
 	renderPaymentSummary();
-}); 
+});
+*/ 
 
 /*
 new Promise((resolve) => {
