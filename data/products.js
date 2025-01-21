@@ -83,6 +83,9 @@ export function loadProductsFetch() {
     });
 
     console.log('load products');
+  }).catch((error) => {
+      //like XHR use extra addEventListner to catch error, promises(fetch) use .catch() for error
+      console.log('Unexpected error. Please try again later.');
   }); 
 
   return promise; //By returning promise--> we can use then() again.. we can return promise; out of a function and then keep attaching more steps to that promise.
@@ -92,7 +95,6 @@ loadProductsFetch().then(() => {
   console.log('next-step');
 });
 */
-
 
 
 
@@ -112,9 +114,17 @@ export function loadProducts(fun) {
     fun();
   });
 
+  //Above function uses a callback to send a request and get a response. Now, what if there is an error along(like we are sending request throught internet, and there is some kind of error(connectivity or something else) on the way.
+  //So for 'callbacks' we usally [set up a separate callback just for errors]
+  xhr.addEventListener('error', (error) => {
+    console.log('Unexpected error. Please try again later.');  //And usually when we get an error, we give some instructions on what to do.
+  });
+ 
+
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }
+
 
 
 /*
