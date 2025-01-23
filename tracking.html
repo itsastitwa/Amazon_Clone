@@ -88,5 +88,14 @@
         </div>
       </div>
     </div>
+
+    <<!-- URL parameters (?orderId = 123) To save data directly into URL. Also URL parameter = search paramters(searchParams), beacuse they are used for features like youtube search-->
+    <script>
+      //To get the parameter out of the URL we can use a built-in class called URL(). First generate an object using this class.
+      const url = new URL(window.location.href);
+      //So whene we use href(we go the URL), and then in this URL-> we use searchParam to get the URL parametr(SPECIFIC).
+      console.log(url.searchParams.get('orderId')); //get--> orderId paramter out of the URL
+      console.log(url.searchParams.get('productId'));
+    </script>
   </body>
 </html>
